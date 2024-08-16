@@ -1,0 +1,24 @@
+services:
+  flask_app:
+    build: .
+    container_name: flask_app
+    ports:
+      - "5000:5000"
+    links:
+      - mongodb
+    networks:
+      - app-network
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/TaskManager      
+
+  mongodb:
+    image: mongo:4.4
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
